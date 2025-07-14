@@ -65,7 +65,8 @@ function showSection(index) {
     currentQuestion = 0;
     score = 0;
     sectionTitleEl.textContent = quizSections[currentSection].title;
-    skipSectionBtn.style.display = currentSection < quizSections.length - 1 ? 'block' : 'none';
+    // Ora il pulsante "Salta" è sempre visibile
+    skipSectionBtn.style.display = 'block';
     showQuestion(currentQuestion);
     updateProgressBars();
 }
@@ -117,7 +118,8 @@ nextBtn.onclick = () => {
         currentQuestion++;
         showQuestion(currentQuestion);
     } else if (currentSection < quizSections.length - 1) {
-        showSection(currentSection + 1);
+        // Mostra il risultato della sezione prima di passare alla successiva
+        showSectionResult(currentSection, () => showSection(currentSection + 1));
     } else {
         showResult();
     }
@@ -132,9 +134,9 @@ function showResult() {
     skipSectionBtn.style.display = 'none';
     let resultText = '';
     for (let i = 0; i < quizSections.length; i++) {
-        resultText += `Sezione "${quizSections[i].title}": ${correctAnswersPerSection[i]} su ${quizSections[i].questions.length} risposte corrette.\n`;
+        resultText += `Sezione "${quizSections[i].title}": <strong>${correctAnswersPerSection[i]}</strong> su ${quizSections[i].questions.length} risposte corrette.<br>`;
     }
-    resultEl.textContent = resultText;
+    resultEl.innerHTML = resultText;
 }
 
 // Avvia il quiz dalla prima sezione
@@ -148,8 +150,32 @@ showSection(0);
 
 // Gestione salto sezione
 skipSectionBtn.onclick = () => {
+    // Mostra il risultato della sezione corrente e poi chiama callback
+    function showSectionResult(sectionIdx, callback, isLastSection = false) {
+        sectionTitleEl.textContent = isLastSection ? 'Fine quiz!' : 'Fine sezione!';
+        questionEl.textContent = '';
+        answersEl.innerHTML = '';
+        nextBtn.style.display = 'none';
+        skipSectionBtn.style.display = 'none';
+        resultEl.textContent = `Hai risposto correttamente a ${correctAnswersPerSection[sectionIdx]} su ${quizSections[sectionIdx].questions.length} domande nella sezione "${quizSections[sectionIdx].title}".`;
+
+        // Crea pulsante conferma
+        let confirmBtn = document.createElement('button');
+        confirmBtn.textContent = isLastSection ? 'Vedi il risultato finale' : 'Procedi alla sezione successiva';
+        confirmBtn.className = 'confirm-section-btn';
+        resultEl.appendChild(confirmBtn);
+        confirmBtn.onclick = () => {
+            confirmBtn.remove();
+            callback();
+        };
+    }
+
     if (currentSection < quizSections.length - 1) {
-        showSection(currentSection + 1);
+        // Mostra il risultato della sezione prima di passare alla successiva
+        showSectionResult(currentSection, () => showSection(currentSection + 1));
+    } else {
+        // Ultima sezione: mostra il risultato della sezione e poi il risultato finale
+        showSectionResult(currentSection, showResult, true);
     }
     updateProgressBars();
 };

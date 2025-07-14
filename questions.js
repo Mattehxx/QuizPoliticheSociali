@@ -1,5 +1,5 @@
 // Funzione per randomizzare la posizione della risposta corretta
-function randomizeAnswers(questions) {
+export function randomizeAnswers(questions) {
     questions.forEach(q => {
         const correctAnswer = q.answers[q.correct];
         const otherAnswers = q.answers.filter((_, i) => i !== q.correct);
@@ -11,16 +11,12 @@ function randomizeAnswers(questions) {
     });
 }
 
-if (typeof module !== 'undefined' && module.exports) {
-    // Se usato come modulo Node.js
-    module.exports = { randomizeAnswers };
-}
 // Sezioni del quiz: ogni sezione ha un titolo e un array di domande
 
 var quizSections = [
 // Esporta per browser e randomizza risposte all'avvio
     {
-        title: "Lezione 1, 2, 3: Introduzione al Welfare State e sue forme",
+        title: "Lezione 1, 2, 3",
         questions: [
             {
                 text: "Qual è la caratteristica distintiva principale delle 'politiche sociali' rispetto alle 'politiche pubbliche' in generale?",
@@ -300,7 +296,7 @@ var quizSections = [
         ]
     },
     {
-        title: "Lezione 4: Sfide e Trasformazioni del Welfare State Contemporaneo",
+        title: "Lezione 4",
         questions: [
             {
                 text: "Quale tra le seguenti è considerata una delle principali sfide demografiche per il welfare state contemporaneo?",

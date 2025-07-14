@@ -1,3 +1,21 @@
+/* Bottone conferma fine sezione */
+.confirm-section-btn {
+  margin: 2rem auto;
+  display: block;
+  padding: 0.75rem 2rem;
+  font-size: 1.1rem;
+  border-radius: 2rem;
+  border: none;
+  background: rgba(0, 123, 255, 0.85);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+.confirm-section-btn:hover {
+  background: rgba(0, 123, 255, 1);
+  transform: scale(1.05);
+}
 /* Barre di completamento quiz */
 .progress-bar-container {
   width: 100%;
