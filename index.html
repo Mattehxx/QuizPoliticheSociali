@@ -13,6 +13,14 @@
     </header>
     <main>
         <div class="quiz-container">
+            <div id="progress-section" class="progress-bar-container">
+                <div id="progress-section-bar" class="progress-bar"></div>
+                <span id="progress-section-label" class="progress-label"></span>
+            </div>
+            <div id="progress-total" class="progress-bar-container">
+                <div id="progress-total-bar" class="progress-bar"></div>
+                <span id="progress-total-label" class="progress-label"></span>
+            </div>
             <div id="question" class="question"></div>
             <div id="answers" class="answers"></div>
             <button id="next-btn" class="next-btn" style="display:none;">Prossima domanda</button>
@@ -22,6 +30,8 @@
     <footer>
         <p>&copy; 2025 Matteo Rovellini <strong>Politiche Sociali</strong></p>
     </footer>
-    <script src="script.js"></script>
+
+    <script type="module" src="questions.js"></script>
+    <script type="module" src="script.js"></script>
 </body>
 </html>
